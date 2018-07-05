@@ -5,19 +5,18 @@
  * Date: 04.07.18
  * Time: 16:26
  */
-
+// подключение к базе
 $pdo = require_once "../dbConnect/dbConnect.php";
-
-session_start();
 
 $login = $_REQUEST['login'];
 $password = $_REQUEST['password'];
 $isTriedAuthorized = 0;
 $isAuthorized = 0;
 
+// обработка сессий
+session_start();
 if (isset($_SESSION['login']) && $_SESSION['role'] === 1) {
-    echo 'ss', PHP_EOL;
-    redirect();
+    redirectToAdminPanel();
 }
 
 if (mb_strlen($login) !== 0 && mb_strlen($password) !== 0) {
@@ -38,10 +37,17 @@ if (mb_strlen($login) !== 0 && mb_strlen($password) !== 0) {
         $_SESSION['login'] = $login;
         $_SESSION['role'] = $row['role'];
 
-        redirect();
+        redirectToAdminPanel();
     }
 }
 
+function redirectToAdminPanel()
+{
+    header('Location: adminPanel.php');
+    exit;
+}
+
+// ---
 
 include "../chunk/head.php";
 //include "../chunk/login.php";
@@ -75,9 +81,3 @@ $body = "
 
 echo $body;
 include "../chunk/footer.php";
-
-function redirect()
-{
-    header('Location: adminPanel.php');
-    exit;
-}

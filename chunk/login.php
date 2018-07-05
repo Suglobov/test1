@@ -1,13 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: suglobov
- * Date: 04.07.18
- * Time: 16:08
- */
+    /**
+     * Created by PhpStorm.
+     * User: suglobov
+     * Date: 04.07.18
+     * Time: 16:08
+     */
 ?>
 <div class="uk-container" action="">
-    <form method="post" >
+    <form method="post">
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">Логинопороль</legend>
 
