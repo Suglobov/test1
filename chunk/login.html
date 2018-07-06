@@ -1,0 +1,31 @@
+<nav class="uk-navbar-container" uk-navbar>
+    <a href="/" class="uk-button uk-button-default">
+        го на главную
+    </a>
+</nav>
+<div class="alert uk-alert-warning uk-hidden">
+    Ошибка в логине или пароле.
+</div>
+<form method="post">
+    <fieldset class="uk-fieldset">
+        <legend class="uk-legend">Логинопороль</legend>
+
+        <div class="uk-margin">
+            <input
+                    class="uk-input"
+                    name="login"
+                    type="text"
+                    placeholder="Логин"
+                    required>
+        </div>
+        <div class="uk-margin">
+            <input
+                    class="uk-input"
+                    name="password"
+                    type="password"
+                    placeholder="Пароль"
+                    required>
+        </div>
+        <button class="uk-button uk-button-default">Го</button>
+    </fieldset>
+</form>

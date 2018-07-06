@@ -1,28 +1,28 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: suglobov
- * Date: 04.07.18
- * Time: 16:26
- */
+
+require_once  "../snippet/helper.php";
+
 // подключение к базе
-$pdo = require_once "../dbConnect/dbConnect.php";
+$pdo = include_once "../dbConnect/dbConnect.php";
 
 $login = $_REQUEST['login'];
 $password = $_REQUEST['password'];
 $isTriedAuthorized = 0;
 $isAuthorized = 0;
 
+require "../snippet/helper.php";
 // обработка сессий
-session_start();
-if (isset($_SESSION['login']) && $_SESSION['role'] === 1) {
+//session_start();
+
+//if (isset($_SESSION['login']) && $_SESSION['role'] === 1) {
+if (isAdmin()) {
     redirectToAdminPanel();
 }
 
 if (mb_strlen($login) !== 0 && mb_strlen($password) !== 0) {
     $isTriedAuthorized = 1;
 
-    $queryQ = "SELECT login,password,role FROM manager WHERE login = ?";
+    $queryQ = "SELECT `login`,`password`,`role` FROM manager WHERE login = ?";
     $query = $pdo->prepare($queryQ);
     $query->execute([$login]);
 
@@ -40,44 +40,18 @@ if (mb_strlen($login) !== 0 && mb_strlen($password) !== 0) {
         redirectToAdminPanel();
     }
 }
-
-function redirectToAdminPanel()
-{
-    header('Location: adminPanel.php');
-    exit;
-}
-
 // ---
-
-include "../chunk/head.php";
-//include "../chunk/login.php";
 
 $alert = "";
 if ($isTriedAuthorized && !$isAuthorized) {
     $alert = "
-        <div class=\"uk-alert-warning\">
-            Ошибка в логине или пароле.
-        </div>";
+<script>
+    var alertShow = true;
+    var alertContainer = [];
+</script>";
 }
 
-$body = "
-    <div class=\"uk-container\">
-        " . $alert . "
-        <form method=\"post\">
-            <fieldset class=\"uk-fieldset\">
-                <legend class=\"uk-legend\">Логинопороль</legend>
-    
-                <div class=\"uk-margin\">
-                    <input class=\"uk-input\" name=\"login\" type=\"text\" placeholder=\"Логин\" required>
-                </div>
-                <div class=\"uk-margin\">
-                    <input class=\"uk-input\" name=\"password\" type=\"password\" placeholder=\"Пароль\" required>
-                </div>
-                <button class=\"uk-button uk-button-default\">Го</button>
-            </fieldset>
-        </form>
-    </div>";
-
-
-echo $body;
-include "../chunk/footer.php";
+require "../chunk/head.html";
+echo $alert;
+require "../chunk/login.html";
+require "../chunk/footer.html";
