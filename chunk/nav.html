@@ -1,0 +1,18 @@
+<nav class="uk-navbar-container uk-margin-bottom" uk-navbar>
+    <a href="/" class="uk-button uk-button-default">
+        го на главную
+    </a>
+    <a href="/login.php"
+       class="uk-button uk-button-default {{neAdmin}}">
+        Попытайся авторизоваться
+    </a>
+    <a href="/adminPanel.php"
+       class="uk-button uk-button-default {{admin}}">
+        в админку
+    </a>
+    <form method="get" class="{{admin}}">
+        <button class="uk-button uk-button-danger" name="exit" value="1">
+            EXIT
+        </button>
+    </form>
+</nav>

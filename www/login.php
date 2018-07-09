@@ -1,6 +1,6 @@
 <?php
 
-require_once  "../snippet/helper.php";
+require_once "../snippet/testAccess.php";
 
 // подключение к базе
 $pdo = include_once "../dbConnect/dbConnect.php";
@@ -10,14 +10,6 @@ $password = $_REQUEST['password'];
 $isTriedAuthorized = 0;
 $isAuthorized = 0;
 
-require "../snippet/helper.php";
-// обработка сессий
-//session_start();
-
-//if (isset($_SESSION['login']) && $_SESSION['role'] === 1) {
-if (isAdmin()) {
-    redirectToAdminPanel();
-}
 
 if (mb_strlen($login) !== 0 && mb_strlen($password) !== 0) {
     $isTriedAuthorized = 1;
@@ -52,6 +44,7 @@ if ($isTriedAuthorized && !$isAuthorized) {
 }
 
 require "../chunk/head.html";
+echo displayNav(isAdmin());
 echo $alert;
 require "../chunk/login.html";
 require "../chunk/footer.html";

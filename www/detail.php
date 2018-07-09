@@ -4,7 +4,7 @@ if (!isset($_GET['id']) || !is_int((int)$_GET['id'])) {
     die();
 }
 
-require "../snippet/helper.php";
+require_once "../snippet/testAccess.php";
 
 $id = (int)$_GET['id'];
 //echo $id;
@@ -19,12 +19,9 @@ $query->execute([$id]);
 $row = $query->fetch(PDO::FETCH_ASSOC);
 
 require "../chunk/head.html";
-$outContent = '
-<nav class="uk-navbar-container uk-margin" uk-navbar>
-    <a href="/" class="uk-button uk-button-default">
-        На главную
-    </a>
-</nav>';
+echo displayNav(isAdmin());
+
+$outContent = '';
 
 if ($row) {
     $outContent .= '

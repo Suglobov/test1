@@ -13,7 +13,38 @@
     <!-- UIkit JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.6/js/uikit.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.6/js/uikit-icons.min.js"></script>
-
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: "textarea",
+            setup: function (editor) {
+                editor.on('change', function () {
+                    tinymce.triggerSave();
+                });
+            }
+        });
+        window.addEventListener('load', function () {
+            let time = setInterval(function () {
+                let tinymceWarning = document.getElementById('mceu_31');
+                if (tinymceWarning) {
+                    clearTimeout(time);
+                    tinymceWarning.style.display = 'none';
+                }
+            }, 100);
+            let newNews = document.getElementById('new');
+            let textarea = document.getElementById('textarea');
+            let warningTextarea = document.getElementById('warningTextarea');
+            newNews && newNews.addEventListener('submit', function (event) {
+                if (textarea.value.length === 0) {
+                    warningTextarea.classList.remove('uk-hidden');
+                    event.preventDefault();
+                    return false;
+                } else {
+                    warningTextarea.classList.add('uk-hidden');
+                }
+            });
+        })
+    </script>
 </head>
 <body>
 <div class="uk-container">

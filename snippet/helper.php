@@ -1,6 +1,17 @@
 <?php
 
 /**
+ * Проверяет является ли страница разрешнной только для админа
+ *
+ * @return bool админская или нет страница
+ */
+function isAdminPage()
+{
+    $adminPages = ["/adminPanel.php", "/edit.php"];
+    return in_array($_SERVER['PHP_SELF'], $adminPages);
+}
+
+/**
  * Проверяет авторизован админ или нет
  *
  * @return bool админ или нет
@@ -12,6 +23,16 @@ function isAdmin()
         return true;
     }
     return false;
+}
+
+/**
+ * Проверяет, является ли страница, страницей логина
+ *
+ * @return bool на "логине" или нет
+ */
+function isLoginPage()
+{
+    return $_SERVER['PHP_SELF'] === '/login.php';
 }
 
 /**
@@ -37,17 +58,16 @@ function redirectToAdminPanel()
 }
 
 /**
- * Проверяет хочет ли пользователь выйти из админ панели
- * для выходна надо передать на страницу, где есть эта функция
- * get параметр exit=true
+ * Производит отмену авторизации
+ *
+ * @param string $exit если 1, то выход
  *
  * @return void
  */
-function testExit()
+function testExit($exit)
 {
-    $exit = $_REQUEST['exit'];
-
-    if (mb_strlen($exit) !== 0 && $exit == 'true') {
+    if (mb_strlen($exit) !== 0 && $exit === '1') {
+        session_start();
         session_destroy();
         redirectToLogin();
     }
@@ -84,5 +104,89 @@ function displayContent($id, $title, $textarea, $imagepath = null, $admin = null
     } else {
         $template = str_replace('{{displayAdmin}}', $classHidden, $template);
     }
+
+
+    return $template;
+}
+
+/**
+ * Выводит форму для редактирования
+ *
+ * @param string      $new       новая новость или нет
+ * @param string      $title     заголовок
+ * @param string      $textarea  поле ввода
+ * @param null|string $imagepath путь до картинки
+ *
+ * @return bool|mixed|string
+ */
+function displayEditForm($new, $title, $textarea, $imagepath = null)
+{
+    $classHidden = 'uk-hidden';
+    $template = file_get_contents("../chunk/editForm.html");
+
+    $template = str_replace('{{title}}', $title, $template);
+    $template = str_replace('{{textarea}}', $textarea, $template);
+    if ($imagepath) {
+        $template = str_replace('{{imagepath}}', $imagepath, $template);
+        $template = str_replace('{{isEdit}}', '', $template);
+    } else {
+        $template = str_replace('{{isEdit}}', $classHidden, $template);
+    }
+    if ($new) {
+        $template = str_replace('{{delete}}', $classHidden, $template);
+    } else {
+        $template = str_replace('{{delete}}', '', $template);
+    }
+
+
+    return $template;
+}
+
+/**
+ * Выводит навигацию
+ *
+ * @param boolean $admin админ или нет
+ *
+ * @return bool|mixed|string
+ */
+function displayNav($admin)
+{
+    $classHidden = 'uk-hidden';
+    $template = file_get_contents("../chunk/nav.html");
+
+    if ($admin) {
+        $template = str_replace('{{admin}}', '', $template);
+        $template = str_replace('{{neAdmin}}', $classHidden, $template);
+    } else {
+        $template = str_replace('{{admin}}', $classHidden, $template);
+        $template = str_replace('{{neAdmin}}', '', $template);
+    }
+
+    return $template;
+}
+
+/**
+ * Выводит ошибки, если они есть
+ *
+ * @param array $errors массив с ошибками
+ *
+ * @return bool|mixed|string
+ */
+function displayErrors($errors)
+{
+    $classHidden = 'uk-hidden';
+    $template = file_get_contents("../chunk/errors.html");
+
+    if (empty($errors)) {
+        $template = str_replace('{{hidden}}', $classHidden, $template);
+    } else {
+        $out = "";
+        foreach ($errors as $v) {
+            $out .= '<div>' . $v . '</div>';
+        }
+        $template = str_replace('{{hidden}}', '', $template);
+        $template = str_replace('{{errors}}', $out, $template);
+    }
+
     return $template;
 }

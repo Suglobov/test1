@@ -1,0 +1,79 @@
+<form method="post"
+      class="{{delete}}
+      uk-margin
+      uk-card-body
+      uk-card-small
+      uk-card-default">
+    Удалить новость
+    <button
+            name="deleteNew"
+            value="1"
+            uk-icon="icon: trash; ratio: 2"></button>
+</form>
+<form id="new" method="post" enctype="multipart/form-data">
+    <div class="uk-margin">
+        <input
+                type="text"
+                name="title"
+                placeholder="Заголовок"
+                required
+                class="uk-input uk-form-large"
+                value="{{title}}"
+        >
+    </div>
+    <div class="uk-margin">
+        <textarea
+                id="textarea"
+                name="textarea"
+        >{{textarea}}</textarea>
+    </div>
+    <div class="uk-margin">
+        <div uk-form-custom="target: true">
+            <input
+                    type="file"
+                    name="file"
+                    accept="image/jpeg,image/png,image/gif">
+            <input
+                    type="text"
+                    placeholder="Выберете файл картинки"
+                    disabled
+                    class="uk-input">
+        </div>
+        <div class="isEdit {{isEdit}} uk-margin">
+            <div uk-grid>
+                <div>
+                    <div>Путь до старой картинки</div>
+                    <div>Если не выбрать новую, то не изменится.</div>
+                </div>
+                <div>
+                    <div>Для удаления нажмите кнопку</div>
+                    <div id="trash" class="uk-link" uk-icon="icon: trash"></div>
+                </div>
+            </div>
+            <input
+                    id="imagepath"
+                    type="text"
+                    name="file2"
+                    disabled
+                    class="uk-input"
+                    value="{{imagepath}}">
+            <script>
+                var trash = document.getElementById('trash');
+                var imagepath = document.getElementById('imagepath');
+                trash.addEventListener('click', function (event) {
+                    imagepath.value = "";
+                });
+                window.addEventListener('load', function () {
+                })
+            </script>
+        </div>
+    </div>
+    <div class="uk-margin">
+        <button class="uk-button uk-button-primary">Сохранить</button>
+        <input
+                type="reset"
+                value="Сбросить"
+                class="uk-button uk-button-default"
+        >
+    </div>
+</form>

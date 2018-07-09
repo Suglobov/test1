@@ -7,9 +7,9 @@ $queryQ = "SELECT * FROM `content` WHERE 1";
 $query = $pdo->prepare($queryQ);
 $query->execute([]);
 
-$isAdmin = isAdmin();
+$isAdminShow = isAdmin() && isAdminPage();
 
-$outContent = "";
+$outContent = '<div class="content">';
 while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
     $textarea = htmlspecialchars_decode($row['textarea']);
     $textarea = (mb_strlen($textarea) > 300)
@@ -21,8 +21,9 @@ while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
         $row['title'],
         $textarea,
         $row['imagepath'],
-        $isAdmin
+        $isAdminShow
     );
 }
+$outContent .= '</div>';
 
 echo $outContent;

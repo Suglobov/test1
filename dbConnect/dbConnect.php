@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: suglobov
- * Date: 04.07.18
- * Time: 17:36
- */
 
 $db   = 'blog';
 $user = 'root';
