@@ -7,7 +7,6 @@ if (!isset($_GET['id']) || !is_int((int)$_GET['id'])) {
 require_once "../snippet/testAccess.php";
 
 $id = (int)$_GET['id'];
-//echo $id;
 
 // подключение к базе
 $pdo = include "../dbConnect/dbConnect.php";
@@ -18,36 +17,28 @@ $query->execute([$id]);
 
 $row = $query->fetch(PDO::FETCH_ASSOC);
 
-require "../chunk/head.html";
-echo displayNav(isAdmin());
 
 $outContent = '';
-
 if ($row) {
-    $outContent .= '
-        <article
-            class="uk-card uk-card-body uk-card-small uk-card-default uk-margin" >
-            <div uk-grid>';
-    if ($row['imagepath'] !== null) {
-        $outContent .= '
-                <div class="uk-width-1-6">
-                    <img src="' . $row['imagepath'] . '" alt="" class="uk-width-1-1">
-                </div>';
-    }
-    $outContent .= '
-                <div class="uk-width-expand">
-                    <div href="/detail.php?id=' . $row['id'] . '" class="uk-card-title">' . $row['title'] . '</div>
-                    <div>' . htmlspecialchars_decode($row['textarea']) . '</div>
-                </div>
-            </div>
-        </article>';
+    $textarea = htmlspecialchars_decode($row['textarea']);
+
+    $outContent .= displayContent(
+        $id,
+        $row['title'],
+        $textarea,
+        $row['imagepath'],
+        true,
+        'div',
+        false
+    );
 } else {
     $outContent .= 'ничего не найдено';
 }
 
+require "../chunk/head.html";
+echo displayNav(isAdmin());
 echo $outContent;
 
-require "../chunk/footer.html";
 
 if (!isAdmin()) {
     if ($row) {
@@ -55,14 +46,25 @@ if (!isAdmin()) {
         $query = $pdo->prepare($queryQ);
         $query->execute([$id]);
         $rowView = $query->fetch(PDO::FETCH_ASSOC);
+        $dateNow = new DateTime();
         if ($rowView) {
-            $queryQ = "UPDATE `views` SET count=? WHERE content_id=?";
+            $dataDb = new DateTime($rowView['last_date']);
+            $interval = date_diff($dateNow, $dataDb);
+            $count = 1;
+            if ($interval->format("%d") <= 7) {
+                $count = $rowView['count'] + 1;
+            }
+//            echo "<pre>";
+//            echo $interval->format("%d");
+//            echo "</pre>";
+            $queryQ = "UPDATE `views` SET count=?,last_date=? WHERE content_id=?";
             $query = $pdo->prepare($queryQ);
-            $query->execute([$rowView['count'] + 1, $id]);
+            $query->execute([$count, $dateNow->format("Y-m-d H:i:s"), $id]);
         } else {
-            $queryQ = "INSERT `views` (content_id,count) VALUES (?,?)";
+            $queryQ = "INSERT `views` (count,last_date,content_id) VALUES (?,?,?)";
             $query = $pdo->prepare($queryQ);
-            $query->execute([$id, 1]);
+            $query->execute([1, $dateNow->format("Y-m-d H:i:s"), $id]);
         }
     }
 }
+require "../chunk/footer.html";

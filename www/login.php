@@ -34,17 +34,13 @@ if (mb_strlen($login) !== 0 && mb_strlen($password) !== 0) {
 }
 // ---
 
-$alert = "";
+$errors = "";
 if ($isTriedAuthorized && !$isAuthorized) {
-    $alert = "
-<script>
-    var alertShow = true;
-    var alertContainer = [];
-</script>";
+    $errors = displayErrors(["Ошибка в логине или пароле."]);
 }
 
 require "../chunk/head.html";
 echo displayNav(isAdmin());
-echo $alert;
+echo $errors;
 require "../chunk/login.html";
 require "../chunk/footer.html";

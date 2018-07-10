@@ -76,15 +76,25 @@ function testExit($exit)
 /**
  * Возвращает шаблон контента с нужными значениями
  *
- * @param int         $id        id в базе, нужен для редактирования
- * @param string      $title     заголовок
- * @param string      $textarea  поле ввода
- * @param null|string $imagepath путь до картинки
- * @param null|bool   $admin     админ ли это
+ * @param int         $id              id в базе, нужен для редактирования
+ * @param string      $title           заголовок
+ * @param string      $textarea        поле ввода
+ * @param null|string $imagepath       путь до картинки
+ * @param bool        $displayTextarea отображать ли поле ввода
+ * @param string      $titleTag        тэг у заголовка
+ * @param bool        $displayAdmin    админ ли это
  *
  * @return bool|string            готовый шаблон
  */
-function displayContent($id, $title, $textarea, $imagepath = null, $admin = null)
+function displayContent(
+    $id,
+    $title,
+    $textarea,
+    $imagepath = null,
+    $displayTextarea = true,
+    $titleTag = 'a',
+    $displayAdmin = false
+)
 {
     $classHidden = 'uk-hidden';
     $template = file_get_contents("../chunk/content.html");
@@ -99,7 +109,13 @@ function displayContent($id, $title, $textarea, $imagepath = null, $admin = null
         $template = str_replace('{{displayImagepath}}', $classHidden, $template);
         $template = str_replace('{{imagepath}}', '', $template);
     }
-    if ($admin) {
+    if ($displayTextarea) {
+        $template = str_replace('{{displayTextarea}}', '', $template);
+    } else {
+        $template = str_replace('{{displayTextarea}}', $classHidden, $template);
+    }
+    $template = str_replace('{{titleTag}}', $titleTag, $template);
+    if ($displayAdmin) {
         $template = str_replace('{{displayAdmin}}', '', $template);
     } else {
         $template = str_replace('{{displayAdmin}}', $classHidden, $template);
@@ -128,9 +144,10 @@ function displayEditForm($new, $title, $textarea, $imagepath = null)
     $template = str_replace('{{textarea}}', $textarea, $template);
     if ($imagepath) {
         $template = str_replace('{{imagepath}}', $imagepath, $template);
-        $template = str_replace('{{isEdit}}', '', $template);
+        $template = str_replace('{{additionalFields}}', '', $template);
     } else {
-        $template = str_replace('{{isEdit}}', $classHidden, $template);
+        $template = str_replace('{{imagepath}}', '', $template);
+        $template = str_replace('{{additionalFields}}', $classHidden, $template);
     }
     if ($new) {
         $template = str_replace('{{delete}}', $classHidden, $template);

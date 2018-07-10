@@ -21,6 +21,8 @@ while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
         $row['title'],
         $textarea,
         $row['imagepath'],
+        true,
+        'a',
         $isAdminShow
     );
 }

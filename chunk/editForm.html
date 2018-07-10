@@ -39,7 +39,7 @@
                     disabled
                     class="uk-input">
         </div>
-        <div class="isEdit {{isEdit}} uk-margin">
+        <div class="isEdit {{additionalFields}} uk-margin">
             <div uk-grid>
                 <div>
                     <div>Путь до старой картинки</div>
@@ -53,15 +53,21 @@
             <input
                     id="imagepath"
                     type="text"
-                    name="file2"
                     disabled
                     class="uk-input"
+                    value="{{imagepath}}">
+            <input
+                    id="imagepath2"
+                    type="hidden"
+                    name="file2"
                     value="{{imagepath}}">
             <script>
                 var trash = document.getElementById('trash');
                 var imagepath = document.getElementById('imagepath');
+                var imagepath2 = document.getElementById('imagepath2');
                 trash.addEventListener('click', function (event) {
                     imagepath.value = "";
+                    imagepath2.value = "";
                 });
                 window.addEventListener('load', function () {
                 })
