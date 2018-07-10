@@ -1,0 +1,32 @@
+<article id="db_{{id}}"
+         class="uk-card
+          uk-card-body
+          uk-card-small
+          uk-card-default
+          uk-margin
+          uk-box-shadow-small">
+    <div class="{{displayAdmin}}
+     uk-margin
+     uk-card
+     uk-card-body
+     uk-card-small
+     uk-card-default">
+        <div class="uk-grid-divider uk-child-width-auto" uk-grid>
+            <div>id: {{id}}</div>
+            <div>
+                <a href="edit.php?id={{id}}" class="edit" uk-icon="icon: pencil; ratio: 1"></a>
+            </div>
+        </div>
+    </div>
+    <div uk-grid>
+        <div class="uk-width-1-6 {{displayImagepath}}">
+            <img src="{{imagepath}}" alt="" class="preview uk-width-1-1">
+        </div>
+        <div class="text-container uk-width-expand">
+            <{{titleTag}} href="/detail.php?id={{id}}" class="title uk-card-title">
+                {{title}}
+            </{{titleTag}}>
+            <div class="textarea {{displayTextarea}}">{{textarea}}</div>
+        </div>
+    </div>
+</article>

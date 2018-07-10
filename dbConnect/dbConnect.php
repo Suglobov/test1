@@ -1,17 +1,20 @@
 <?php
 
-$db   = 'blog';
-$user = 'root';
-$pass = '123';
+require '.define.php';
+
+$host = DB_HOST;
+$db = DB_NAME;
+$user = DB_USER;
+$pass = DB_PASS;
+$port = DB_PORT;
 $charset = 'utf8';
-$port = '3306';
 
 $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
 
 $opt = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
+    PDO::ATTR_EMULATE_PREPARES => false,
 ];
 
 try {

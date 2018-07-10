@@ -92,13 +92,14 @@ function writeToDb($id, $title, $textarea, $file, $oldImagePath, $delete = '0')
                 $relativeImagePath = "/image/" . $relativeImageDirPath
                     . "/" . $prefix . $imageName;
 
-                move_uploaded_file($file['tmp_name'], $imagePath);
                 if (!is_dir($imageDirPath)) {
                     if (!mkdir($imageDirPath, 0777, true)) {
                         $errors[] = 'Не удалось создать директории для картинок';
                     }
                     chmod($imageDirPath, 0777);
                 }
+                move_uploaded_file($file['tmp_name'], $imagePath);
+                chmod($imagePath, 0777);
             } else {
                 if ($oldImagePath === "") {
                     $oldImagePath = null;
