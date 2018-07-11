@@ -9,7 +9,7 @@
     ```
 2. Выполнить клонирования конфигурации подключения к базе данных
     ```
-    cp /dbConnect/.define.php.example /dbConnect/.define.php -i
+    cp ./dbConnect/.define.php.example ./dbConnect/.define.php -i
     ```
     затем в файле **.define.php** поменять значения констант
 3. Надо импортировать в базу данных дамп из файла  
