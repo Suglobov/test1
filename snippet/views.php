@@ -1,7 +1,7 @@
 <?php
 
 // подключение к базе
-$pdo = include "../dbConnect/dbConnect.php";
+//$pdo = include_once "../dbConnect/dbConnect.php";
 
 $queryQ = "SELECT c.id, c.title, c.textarea, c.imagepath FROM `views` AS v
 JOIN `content` AS c ON c.id=v.content_id

@@ -1,0 +1,6 @@
+.idea
+/dbConnect/.define.php
+/Nginx
+/PHP
+docker-compose*
+

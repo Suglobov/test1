@@ -89,7 +89,7 @@ function writeToDb($id, $title, $textarea, $file, $oldImagePath, $delete = '0')
                 }
 
                 $imagePath = $imageDirPath . $prefix . $imageName;
-                $relativeImagePath = "/image/" . $relativeImageDirPath
+                $relativeImagePath = "./image/" . $relativeImageDirPath
                     . "/" . $prefix . $imageName;
 
                 if (!is_dir($imageDirPath)) {

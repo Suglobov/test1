@@ -9,7 +9,7 @@ if (!isset($_GET['id'])) {
 require_once "../snippet/testAccess.php";
 
 // подключение к базе
-$pdo = include "../dbConnect/dbConnect.php";
+$pdo = include_once "../dbConnect/dbConnect.php";
 
 require "../snippet/testRequest.php";
 

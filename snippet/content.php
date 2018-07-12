@@ -1,7 +1,7 @@
 <?php
 
 // подключение к базе
-$pdo = include "../dbConnect/dbConnect.php";
+$pdo = include_once "../dbConnect/dbConnect.php";
 
 $queryQ = "SELECT * FROM `content` WHERE 1";
 $query = $pdo->prepare($queryQ);

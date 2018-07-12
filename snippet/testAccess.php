@@ -2,7 +2,9 @@
 
 require_once "../snippet/helper.php";
 
-testExit($_REQUEST['exit']);
+if (isset($_REQUEST) && isset($_REQUEST['exit'])) {
+    testExit($_REQUEST['exit']);
+}
 
 $isAdmin = isAdmin();
 

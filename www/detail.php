@@ -9,7 +9,7 @@ require_once "../snippet/testAccess.php";
 $id = (int)$_GET['id'];
 
 // подключение к базе
-$pdo = include "../dbConnect/dbConnect.php";
+$pdo = include_once "../dbConnect/dbConnect.php";
 
 $queryQ = "SELECT * FROM `content` WHERE id=?";
 $query = $pdo->prepare($queryQ);

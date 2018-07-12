@@ -1,3 +1,3 @@
 #!/bin/bash
-cd ../www/image/
+cd ./www/image/
 sudo chmod -R 777 *
