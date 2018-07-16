@@ -14,7 +14,7 @@
         <div class="uk-grid-divider uk-child-width-auto" uk-grid>
             <div>id: {{id}}</div>
             <div>
-                <a href="edit.php?id={{id}}" class="edit" uk-icon="icon: pencil; ratio: 1"></a>
+                <a href="./edit.php?id={{id}}" class="edit" uk-icon="icon: pencil; ratio: 1"></a>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
             <img src="{{imagepath}}" alt="" class="preview uk-width-1-1">
         </div>
         <div class="text-container uk-width-expand">
-            <{{titleTag}} href="/detail.php?id={{id}}" class="title uk-card-title">
+            <{{titleTag}} href="./detail.php?id={{id}}" class="title uk-card-title">
                 {{title}}
             </{{titleTag}}>
             <div class="textarea {{displayTextarea}}">{{textarea}}</div>

@@ -8,7 +8,12 @@
 function isAdminPage()
 {
     $adminPages = ["/adminPanel.php", "/edit.php"];
-    return in_array($_SERVER['PHP_SELF'], $adminPages);
+    foreach ($adminPages as $v) {
+        if (strripos($_SERVER['PHP_SELF'], $v) !== false) {
+            return true;
+        }
+    }
+    return false;
 }
 
 /**
@@ -18,7 +23,10 @@ function isAdminPage()
  */
 function isAdmin()
 {
-    session_start();
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+
     if (isset($_SESSION['login']) && $_SESSION['role'] == 1) {
         return true;
     }
@@ -42,7 +50,7 @@ function isLoginPage()
  */
 function redirectToLogin()
 {
-    header('Location: login.php');
+    header('Location: ./login.php');
     exit;
 }
 
@@ -53,7 +61,7 @@ function redirectToLogin()
  */
 function redirectToAdminPanel()
 {
-    header('Location: adminPanel.php');
+    header('Location: ./adminPanel.php');
     exit;
 }
 
@@ -67,8 +75,10 @@ function redirectToAdminPanel()
 function testExit($exit)
 {
     if (mb_strlen($exit) !== 0 && $exit === '1') {
-        session_start();
-        session_destroy();
+        if (!isset($_SESSION)) {
+            session_start();
+            session_destroy();
+        }
         redirectToLogin();
     }
 }

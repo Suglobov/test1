@@ -1,5 +1,6 @@
 <?php
-
+//echo "<pre>";
+//print_r($_SERVER);
 require_once "../snippet/helper.php";
 
 if (isset($_REQUEST) && isset($_REQUEST['exit'])) {

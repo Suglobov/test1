@@ -31,7 +31,7 @@ function writeToDb($id, $title, $textarea, $file, $oldImagePath, $delete = '0')
         $queryRes = $query->execute($queryA);
         if ($queryRes) {
             $success[] = "Успешное удаление";
-            header('Location: /adminPanel.php');
+            header('Location: ./adminPanel.php');
         } else {
             $errors[] = "Удаление не получилось";
         }
@@ -134,7 +134,7 @@ function writeToDb($id, $title, $textarea, $file, $oldImagePath, $delete = '0')
 
             if ($queryRes) {
                 $success[] = "Запись успешная";
-                header('Location: /adminPanel.php');
+                header('Location: ./adminPanel.php');
             } else {
                 $errors[] = "В базу не получилось записать данные";
             }

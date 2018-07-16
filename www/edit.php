@@ -19,16 +19,22 @@ if ($_GET['id'] === 'new') {
     $id = (int)$_GET['id'];
 }
 
+$title = isset($_REQUEST['title']) ? $_REQUEST['title'] : null;
+$textarea = isset($_REQUEST['textarea']) ? $_REQUEST['textarea'] : null;
+$file = isset($_FILES['file']) ? $_FILES['file'] : null;
+$file2 = isset($_REQUEST['file2']) ? $_REQUEST['file2'] : null;
+$deleteNew = isset($_REQUEST['deleteNew']) ? $_REQUEST['deleteNew'] : null;
+
 $errors = writeToDb(
     $id,
-    $_REQUEST['title'],
-    $_REQUEST['textarea'],
-    $_FILES['file'],
-    $_REQUEST['file2'],
-    $_REQUEST['deleteNew']
+    $title,
+    $textarea,
+    $file,
+    $file2,
+    $deleteNew
 );
 
-
+$outContent = '';
 if ($_GET['id'] === 'new') {
     $outContent .= displayEditForm(
         1,

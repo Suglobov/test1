@@ -5,8 +5,8 @@ require_once "../snippet/testAccess.php";
 // подключение к базе
 $pdo = include_once "../dbConnect/dbConnect.php";
 
-$login = $_REQUEST['login'];
-$password = $_REQUEST['password'];
+$login = isset($_REQUEST['login']) ? $_REQUEST['login'] : null;
+$password = isset($_REQUEST['password']) ? $_REQUEST['password'] : null;
 $isTriedAuthorized = 0;
 $isAuthorized = 0;
 
